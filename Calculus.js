@@ -11,6 +11,7 @@ copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,40 +32,41 @@ SOFTWARE.
 var myFunction = new Function("x", "return x * x");
 
 function isValidEquation(equation) {
-    'use strict';
-    
-    var isValid = false;
-    var func = new Function("x", equation);
-    
-    isValid = typeof(func(2)) === "integer";
-    
-    return isValid;
+  "use strict";
+  
+  var isValid = false,
+      func = new Function("x", equation);
+
+  isValid = typeof func(2) === "integer";
+
+  return isValid;
 }
 
 function integrate(from, to, step) {
-    'use strict';
-    
-    var x = 0;
-    var rectangleArea = 0;
-    var totalArea = 0;
-    var rectangles = Math.abs(to - from) / step;
+  "use strict";
 
-    for (var i = 0; i < rectangles; i++) {
-        // Calculate the new X value
-        x = i * step + from;
-        
-        // Calculate the rectangle's area (x * y)
-        rectangleArea = Math.abs(step * myFunction(x));
-        
-        // Add the rectangles area to the total area under the curve
-        totalArea += rectangleArea;
-    }
-  
-    return totalArea;
+  var x = 0,
+    i = 0,
+    rectangleArea = 0,
+    totalArea = 0,
+    rectangles = Math.abs(to - from) / step;
+
+  for (i = 0; i < rectangles; i += 1) {
+    // Calculate the new X value
+    x = i * step + from;
+
+    // Calculate the rectangle's area (x * y)
+    rectangleArea = step * myFunction(x);
+
+    // Add the rectangles area to the total area under the curve
+    totalArea += rectangleArea;
+  }
+
+  return totalArea;
 }
 
 function derive(at, step) {
-    'use strict';
-    
-    return (myFunction(at + step) - myFunction(at - step)) / (2 * step);
+  "use strict";
+
+  return (myFunction(at + step) - myFunction(at - step)) / (2 * step);
 }
