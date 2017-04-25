@@ -1,70 +1,235 @@
 /*
-The MIT License (MIT)
-
-Copyright (c) 2017 Steven Gago
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ * SUMMARY
+ * The size of the steps to take when integrating
+ * or derivating.  Lowering this value to 0.01
+ * will result in more accurate calculations.  However,
+ * BE CAREFUL!  Any value smaller than 0.01 will take a long
+ * time to calculate!
+ */
+const STEP_SIZE = 0.01;
 
 /*
- * TODO: We need
- * 1. Lots of comments
- * 2. Arrays
- * 3. If statements
- * 4. Constants
- * 5. Validate user input
+ * SUMMARY
+ * Returns true if an argument is a valid number;
+ * otherwise, false.
+ *
+ * PARAMETERS
+ * parameter value = 
+ *
+ * RETURNS
+ * Returns true if the given argument is a valid number;
+ * otherwise, false.
+ *
+ * EXAMPLES
+ * var result = isValid(1);         // Returns true
+ * var result = isValid(2);         // Returns true
+ * var result = isValid("Hello!");  // Returns false
+ * var result = isValid("1");       // Returns false
  */
-var myFunction = new Function("x", "return x * x");
-
-function isValidEquation(equation) {
-    'use strict';
+function isValidNumber(value) {
+    "use strict";
     
     var isValid = false;
-    var func = new Function("x", equation);
     
-    isValid = typeof(func(2)) === "integer";
+    // Is num a number, and is num not NaN?
+    isValid = (typeof value === "number") &&
+                (!Number.isNaN(value));
     
     return isValid;
 }
 
-function integrate(from, to, step) {
-    'use strict';
+/*
+ * SUMMARY
+ * The math equation to take the integral or derivative of.
+ *
+ * PARAMETERS
+ * parameter x = 
+ *
+ * RETURNS
+ * Calculates x^2 and returns the result as a number.
+ *
+ * EXAMPLES
+ * var result = mathEquation(0);    // result will hold 0
+ * var result = mathEquation(1);    // result will hold 2
+ * var result = mathEquation(2);    // result will hold 4
+ * var result = mathEquation(4);    // result will hold 8
+ */
+function mathEquation(x) {
+    "use strict";
     
-    var x = 0;
-    var rectangleArea = 0;
-    var totalArea = 0;
-    var rectangles = Math.abs(to - from) / step;
+    return x ** 2;
+}
 
-    for (var i = 0; i < rectangles; i++) {
-        // Calculate the new X value
-        x = i * step + from;
+/*
+ * SUMMARY
+ * Takes the integral of the mathEquation function using
+ * the Riemann squares method.
+ *
+ * PARAMETERS
+ * parameter from = Starts taking the integral at this number.
+ * parameter to = Stops taking the integral at this number.
+ *
+ * RETURNS
+ * Returns the result of the integral as a number.
+ * 
+ * EXAMPLES
+ * var result = integrate(0, 0);
+ * var result = integrate(0, 1);
+ * var result = integrate(0, 2);
+ * var result = integrate(-1, 1);
+ * var result = integrate("Hello!", "Friend!")  // Returns NaN
+ */
+function integrate(from, to) {
+    "use strict";
+
+    var i = 0,
+        xPosition = 0,
+        rectangleArea = 0,
+        rectangles = 0,
+        totalArea = 0;
+
+    // Are "from" and "to" arguments valid numbers?
+    if (isValidNumber(from) && isValidNumber(to)) {
         
-        // Calculate the rectangle's area (x * y)
-        rectangleArea = Math.abs(step * myFunction(x));
-        
-        // Add the rectangles area to the total area under the curve
-        totalArea += rectangleArea;
+        // Calculate the number of rectangles we need
+        rectangles = Math.abs(to - from) / STEP_SIZE;
+
+        // For all of the rectangles...
+        for (i = 0; i < rectangles; i += 1) {
+
+            // Calculate the new X value
+            xPosition = i * STEP_SIZE + from;
+
+            // Calculate the rectangle's area (x * y)
+            rectangleArea = STEP_SIZE * mathEquation(xPosition);
+
+            // Add the rectangles area to the total area under the curve
+            totalArea += rectangleArea;
+        }
     }
-  
+    else {
+        
+        // Uhoh, "from" or "to" are not a number
+        totalArea = NaN;
+    }
+
     return totalArea;
 }
 
-function derive(at, step) {
-    'use strict';
+/*
+ * SUMMARY
+ * Takes the derivative of the mathEquation function at a given
+ * point.
+ *
+ * PARAMETERS
+ * parameter at = Position to take the derivative of
+ *  mathEquation at as a number.
+ *
+ * RETURNS
+ * Returns the result of deriving mathEquation at a
+ *  given point as a number.
+ * Returns NaN if STEP_SIZE is zero.
+ *
+ * EXAMPLES
+ * var result = derive(0);
+ * var result = derive(1);
+ * var result = derive(2);
+ * var result = derive(-1);
+ * var result = derive(-2);
+ * var result = derive("Hello!");   // Returns NaN
+ */
+function derive(at) {
+    "use strict";
+
+    var y0 = 0,
+        y1 = 0,
+        result = 0;
+
+    // Is the value of "at" a valid number?
+    if (isValidNumber(at)) {
+        
+        y0 = mathEquation(at - STEP_SIZE);
+        y1 = mathEquation(at + STEP_SIZE);
+        
+        result = (y1 - y0) / (2 * STEP_SIZE);
+    }
+    else {
+        
+        // Uhoh, "at" is not a valid number
+        result = NaN;
+    }
+
+    return result;
+}
+
+/*
+ * SUMMARY
+ * Demonstrates the use of the calculus functions. 
+ *
+ * PARAMETERS
+ * N/A - There are no parameters.
+ *
+ * RETURNS
+ * N/A - No value is returned.
+ *
+ * EXAMPLES
+ * demo();
+ */
+function demo() {
+    "use strict";
     
-    return (myFunction(at + step) - myFunction(at - step)) / (2 * step);
+    var i = 0,
+        result = 0,
+        numbers = [-2, -1, 0, 1, 2],
+        derivativeResults = [],
+        integralResults = [];
+    
+    // For each number in numbers...
+    for (i = 0; i < numbers.length; i++) {
+        
+        // Calculate the derivative at numbers[i] of x^2
+        result = derive(numbers[i]).toFixed(2);
+        
+        // Append the result to the end of derivativeResults
+        derivativeResults.push(result);
+    }
+    
+    // For each number in numbers...
+    for (i = 0; i < numbers.length - 1; i++) {
+        
+        // Calculate the integral from i to i + 1
+        result = integrate(numbers[i], numbers[i + 1]).toFixed(2);
+        
+        // Append the result to the end of integralResults
+        integralResults.push(result);
+    }
+    
+    document.write("<h1>Final Exam: Calculus</h1>");
+    document.write("<h2>Derivative of x<sup>2</sup></h2>");
+    document.write("<ul>");
+    
+    // For each number in numbers
+    for (i = 0; i < numbers.length; i++) {
+        
+        // Display the derivative of x^2 at the given number
+        document.write("<li>The derivative of x<sup>2</sup> at " +
+                       numbers[i] + " is " + derivativeResults[i] +
+                       "</li>");
+    }
+    
+    document.write("</ul>");
+    document.write("<h2>Integral of x<sup>2</sup></h2>");
+    document.write("<ul>");
+    
+    // For each number in numbers
+    for (i = 0; i < numbers.length - 1; i++) {
+
+        // Display the integral of x^2 from one point to another
+        document.write("<li>The integral from " + numbers[i] +
+                       " to " + numbers[i + 1] +
+                       " of x<sup>2</sup> is " +
+                       integralResults[i] + "</li>");
+    }
+    
+    document.write("</ul>");
 }
