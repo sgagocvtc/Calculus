@@ -3,8 +3,8 @@
  * The size of the steps to take when integrating
  * or derivating.  Lowering this value
  * will result in more accurate calculations.  However,
- * BE CAREFUL!  Any value smaller than 0.01 will take a long
- * time to calculate!
+ * BE CAREFUL!  Any value smaller than 0.01 will take
+ * longer to calculate!
  */
 const STEP_SIZE = 0.01;
 
@@ -26,6 +26,8 @@ const STEP_SIZE = 0.01;
  * var result = isValid(2);         // Returns true
  * var result = isValid("Hello!");  // Returns false
  * var result = isValid("1");       // Returns false
+ * var result = isValid(NaN);       // Returns false
+ * var result = isValid("");        // Returns false
  */
 function isValidNumber(value) {
     "use strict";
@@ -41,10 +43,10 @@ function isValidNumber(value) {
 
 /*
  * SUMMARY
- * Returns the value of x^2 at a given position as a number.
+ * Returns the value of x^2 at a given x position.
  *
  * PARAMETERS
- * parameter x = The position to caculate.
+ * parameter x = The position of x caculate in x^2.
  *
  * RETURNS
  * Calculates x^2 at a given position 
