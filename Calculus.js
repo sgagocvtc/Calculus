@@ -1,10 +1,10 @@
 /*
  * SUMMARY
  * The size of the steps to take when integrating
- * or derivating.  Lowering this value to 0.01
+ * or derivating.  Lowering this value
  * will result in more accurate calculations.  However,
- * BE CAREFUL!  Any value smaller than 0.01 will take a long
- * time to calculate!
+ * BE CAREFUL!  Any value smaller than 0.01 will take
+ * longer to calculate!
  */
 const STEP_SIZE = 0.01;
 
@@ -14,7 +14,8 @@ const STEP_SIZE = 0.01;
  * otherwise, false.
  *
  * PARAMETERS
- * parameter value = 
+ * parameter value = A value to determine if a number
+ * is valid or not
  *
  * RETURNS
  * Returns true if the given argument is a valid number;
@@ -25,28 +26,31 @@ const STEP_SIZE = 0.01;
  * var result = isValid(2);         // Returns true
  * var result = isValid("Hello!");  // Returns false
  * var result = isValid("1");       // Returns false
+ * var result = isValid(NaN);       // Returns false
+ * var result = isValid("");        // Returns false
  */
 function isValidNumber(value) {
     "use strict";
     
     var isValid = false;
     
-    // Is num a number, and is num not NaN?
-    isValid = (typeof value === "number") &&
-                (!Number.isNaN(value));
+    // Is num valid? This is, is num a number,
+    // not NaN, and not infinity?
+    isValid = Number.isFinite(value);
     
     return isValid;
 }
 
 /*
  * SUMMARY
- * The math equation to take the integral or derivative of.
+ * Returns the value of x^2 at a given x position.
  *
  * PARAMETERS
- * parameter x = 
+ * parameter x = The position of x caculate in x^2.
  *
  * RETURNS
- * Calculates x^2 and returns the result as a number.
+ * Calculates x^2 at a given position 
+ * and returns the result as a number.
  *
  * EXAMPLES
  * var result = mathEquation(0);    // result will hold 0
