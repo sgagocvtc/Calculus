@@ -14,8 +14,8 @@ const STEP_SIZE = 0.01;
  * otherwise, false.
  *
  * PARAMETERS
- * parameter value = A value to determine if a number
- * is valid or not
+ * parameter value = A value to check if a
+ * valid number or not.
  *
  * RETURNS
  * Returns true if the given argument is a valid number;
@@ -68,11 +68,11 @@ function mathEquation(x) {
  * SUMMARY
  * Takes the integral of the mathEquation function using
  * the Riemann squares method.
- *
+ * 
  * PARAMETERS
  * parameter from = Starts taking the integral at this number.
  * parameter to = Stops taking the integral at this number.
- *
+ * 
  * RETURNS
  * Returns the result of the integral as a number.
  * 
@@ -116,7 +116,7 @@ function integrate(from, to) {
         // Uhoh, "from" or "to" are not a number
         totalArea = NaN;
     }
-
+    
     return totalArea;
 }
 
@@ -124,16 +124,16 @@ function integrate(from, to) {
  * SUMMARY
  * Takes the derivative of the mathEquation function at a given
  * point.
- *
+ * 
  * PARAMETERS
  * parameter at = Position to take the derivative of
  *  mathEquation at as a number.
- *
+ * 
  * RETURNS
  * Returns the result of deriving mathEquation at a
  *  given point as a number.
  * Returns NaN if STEP_SIZE is zero.
- *
+ * 
  * EXAMPLES
  * var result = derive(0);
  * var result = derive(1);
