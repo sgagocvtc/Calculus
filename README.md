@@ -1,5 +1,5 @@
 # CVTC 152-101 Programming Fundamentals with JavaScript Final Exam
-The Spring 2017 Programming Fundamentals with JavaScript (152-101) final exam code.  Again,
+The Programming Fundamentals with JavaScript (152-101) final exam code.  Again,
 * The exam should take about 1 to 1.5 hours
 * Students may have the full 3 hours to work on the exam
 * Students may stay or leave after they complete the exam
