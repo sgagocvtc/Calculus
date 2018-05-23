@@ -6,7 +6,7 @@ The Programming Fundamentals with JavaScript (152-101) final exam code.  Again,
 
 ## What's On the Exam?
 Nothing should come as a suprise, and there will be no "trick" questions.  The exam will be divided into sections that include
-* General questions (Is Java the same as JavaScript?  Software development methdologies, revision control, interpreters vs. compilers, etc.)
+* General questions (Is Java the same as JavaScript?  Software development methdologies, interpreters vs. compilers, etc.)
 * Comments
 * Variables, variable scope (local and global), 5 basic data types
 * Operators, operator type (unary, binary, or ternary)
